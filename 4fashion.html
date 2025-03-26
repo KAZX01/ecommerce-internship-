@@ -1,0 +1,293 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>EZYShop - Fashion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.buy-now-btn');
+            const modal = document.getElementById('buyNowModal');
+            const closeModal = document.getElementById('closeModal');
+            const addToCartBtn = document.getElementById('addToCart');
+            const buyNowBtn = document.getElementById('buyNow');
+            const removeFromCartBtn = document.getElementById('removeFromCart');
+            const cartBtn = document.getElementById('cartBtn');
+            const cartSidebar = document.getElementById('cartSidebar');
+            const closeCartBtn = document.getElementById('closeCartBtn');
+            const cartItemsContainer = document.getElementById('cartItems');
+            const totalPriceElement = document.getElementById('totalPrice');
+
+            const updateCartSidebar = () => {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cartItemsContainer.innerHTML = '';
+                let totalPrice = 0;
+                cart.forEach(item => {
+                    totalPrice += item.price;
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('flex', 'justify-between', 'items-center', 'py-2');
+                    cartItem.innerHTML = `
+                        <span>${item.title}</span>
+                        <span>$${item.price.toFixed(2)}</span>
+                        <button class="text-red-600 remove-item" data-title="${item.title}"><i class="fas fa-trash"></i></button>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+
+                totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const title = event.currentTarget.getAttribute('data-title');
+                        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                        cart = cart.filter(item => item.title !== title);
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        updateCartSidebar();
+                    });
+                });
+            };
+
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    if (button.getAttribute('href') === "#") {
+                        event.preventDefault();
+                        modal.style.display = 'flex';
+                        
+                        const productTitle = button.closest('.text-center').querySelector('h3').textContent;
+                        const productPrice = button.closest('.text-center').querySelector('.product-price').textContent;
+                        modal.setAttribute('data-product', productTitle);
+                        modal.setAttribute('data-price', productPrice);
+                        
+                        if (button.classList.contains('in-cart')) {
+                            addToCartBtn.style.display = 'none';
+                            removeFromCartBtn.style.display = 'block';
+                        } else {
+                            addToCartBtn.style.display = 'block';
+                            removeFromCartBtn.style.display = 'none';
+                        }
+                    }
+                });
+            });
+
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            addToCartBtn.addEventListener('click', () => {
+                const productTitle = modal.getAttribute('data-product');
+                const productPrice = parseFloat(modal.getAttribute('data-price').replace('$', ''));
+                
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                
+                if (!cart.some(item => item.title === productTitle)) {
+                    cart.push({ title: productTitle, price: productPrice });
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert(`${productTitle} has been added to your cart.`);
+                    
+                    const button = [...buttons].find(btn => 
+                        btn.closest('.text-center').querySelector('h3').textContent === productTitle
+                    );
+                    button.classList.add('in-cart');
+                    button.textContent = 'In Cart';
+                }
+                
+                modal.style.display = 'none';
+                updateCartSidebar();
+            });
+
+            removeFromCartBtn.addEventListener('click', () => {
+                const productTitle = modal.getAttribute('data-product');
+                alert(`${productTitle} has been removed from your cart.`);
+                
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart = cart.filter(item => item.title !== productTitle);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                const button = [...buttons].find(btn => 
+                    btn.closest('.text-center').querySelector('h3').textContent === productTitle
+                );
+                button.classList.remove('in-cart');
+                button.textContent = 'Buy Now';
+                modal.style.display = 'none';
+                updateCartSidebar();
+            });
+
+            buyNowBtn.addEventListener('click', () => {
+                const productTitle = modal.getAttribute('data-product');
+                const button = [...buttons].find(btn => 
+                    btn.closest('.text-center').querySelector('h3').textContent === productTitle
+                );
+
+                if (button.classList.contains('in-cart')) {
+                    window.location.href = "7payment.html"; // Redirect to payment page
+                } else {
+                    alert("Please add the item to your cart before purchasing.");
+                }
+            });
+
+            cartBtn.addEventListener('click', () => {
+                cartSidebar.classList.remove('hidden');
+                updateCartSidebar();
+            });
+
+            closeCartBtn.addEventListener('click', () => {
+                cartSidebar.classList.add('hidden');
+            });
+        });
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        .nav-link:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body class="font-roboto bg-white text-black">
+    <header class="bg-white shadow">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+            <div class="text-sm text-gray-600">
+                <span>1234 21st Street , New York City</span> |
+                <span>123-456-7890</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a class="text-sm text-gray-600" href="#">Contact Us</a>
+                <a class="text-sm text-gray-600" href="#">English</a>
+                <a class="text-gray-600" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="text-gray-600" href="#"><i class="fab fa-twitter"></i></a>
+                <a class="text-gray-600" href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </header>
+    <nav class="bg-white shadow">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-black">EZYShop</div>
+            <ul class="flex space-x-6">
+                <li><a class="text-gray-600 nav-link" href="1home.html">Home</a></li>
+                <li><a class="text-gray-600 nav-link" href="2today'sdeals.html">Today's Deal</a></li>
+                <li><a class="text-gray-600 nav-link" href="3electronics.html">Electronics</a></li>
+                <li><a class="text-gray-600 nav-link" href="4fashion.html">Fashion</a></li>
+                <li><a class="text-gray-600 nav-link" href="5home&kitchen.html">Home & Kitchen</a></li>
+                <li><a class="text-gray-600 nav-link" href="6books.html">Books</a></li>
+            </ul>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input class="border border-gray-300 rounded px-4 py-2" id="search-input" placeholder="Search..." type="text"/>
+                    <button class="absolute right-0 top-0 mt-2 mr-2 text-gray-600" onclick="searchProducts()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <button id="cartBtn" class="bg-black text-white px-4 py-2 rounded">Cart</button>
+            </div>
+        </div>
+    </nav>
+    <section class="bg-gray-100 py-10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Latest Fashion Trends</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <img alt="Stylish summer dress for women" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/4Huur6RxU9K09tk4Pw6OBQq8VS01tYMx-dlzQx8_OFQ.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">Summer Dress</h3>
+                    <p class="mt-2 text-gray-600">Stylish summer dress perfect for events.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$49.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+                <div class="text-center">
+                    <img alt="Men's casual shirt" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/TBlJgSejv4rrUxjadIOX3t6Gmyz4FD8SdbVMvf0a1tA.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">Casual Shirt</h3>
+                    <p class="mt-2 text-gray-600">Comfortable and stylish casual shirt for men.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$29.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+                <div class="text-center">
+                    <img alt="Women's leather handbag" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/DSqqAFAwUNkyO1mR2SPdyiRNeUmhm3_lWbVB58Pp_Mk.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">Leather Handbag</h3>
+                    <p class="mt-2 text-gray-600">Elegant leather handbag for women.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$89.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+                <div class="text-center">
+                    <img alt="Men's formal suit" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/acfA_AI9_PbJsrADfK7yrFv0hnMA5imSqTzklccoT4Y.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">Formal Suit</h3>
+                    <p class="mt-2 text-gray-600">Classic formal suit for men.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$199.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+                <div class="text-center">
+                    <img alt="Women's high heels" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/yqZyATG4juSsAZrN5xI95S8TXQUxXAKRkX6Vsu0QH0o.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">High Heels</h3>
+                    <p class="mt-2 text-gray-600">Elegant high heels for women.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$59.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+                <div class="text-center">
+                    <img alt="Men's leather jacket" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/QRoFswwwrRK96uuGG348PdxPUZ9MJZeelGmdG_jKdLg.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">Leather Jacket</h3>
+                    <p class="mt-2 text-gray-600">Stylish leather jacket for men.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$149.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+                <div class="text-center">
+                    <img alt="Women's sunglasses" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/k8bNuXN9fm6JZgM3q4yfmFqoBOEyA509of74aLsgrxo.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">Sunglasses</h3>
+                    <p class="mt-2 text-gray-600">Trendy sunglasses for women.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$19.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+                <div class="text-center">
+                    <img alt="Men's sneakers" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/8qOqGBMYFtcPWHck8ntJKwVxJpAdsh4lYWIxzizt02w.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">Sneakers</h3>
+                    <p class="mt-2 text-gray-600">Comfortable and stylish sneakers for men.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$79.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+                <div class="text-center">
+                    <img alt="Women's winter coat" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/bcMLNYhtTU4xok0bwOTkx9z0Z3jbR8f5d4la0S2qkg4.jpg" width="200"/>
+                    <h3 class="mt-4 text-lg font-bold">Winter Coat</h3>
+                    <p class="mt-2 text-gray-600">Warm and stylish winter coat for women.</p>
+                    <p class="mt-2 text-red-600 font-bold product-price">$129.99</p>
+                    <a class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded buy-now-btn" href="#">Buy Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Buy Now Modal -->
+    <div id="buyNowModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold">Confirm Your Action</h2>
+            <p class="mt-2">Do you want to add this item to your cart or buy it now?</p>
+            <div class="mt-4 flex space-x-4">
+                <button id="addToCart" class="bg-green-600 text-white px-4 py-2 rounded">Add to Cart</button>
+                <button id="buyNow" class="bg-blue-600 text-white px-4 py-2 rounded">Buy Now</button>
+                <button id="removeFromCart" class="bg-red-600 text-white px-4 py-2 rounded hidden">Remove from Cart</button>
+            </div>
+            <button id="closeModal" class="mt-4 text-gray-600">Close</button>
+        </div>
+    </div>
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="fixed inset-y-0 right-0 bg-white w-64 shadow-lg hidden">
+        <div class="p-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold">Your Cart</h2>
+                <button id="closeCartBtn" class="text-gray-600"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="cartItems" class="mt-4">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="mt-4">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold">Total:</span>
+                    <span id="totalPrice" class="font-bold">$0.00</span>
+                </div>
+                <button class="bg-blue-600 text-white px-4 py-2 rounded w-full mt-4" onclick="window.location.href='7payment.html'">Checkout</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

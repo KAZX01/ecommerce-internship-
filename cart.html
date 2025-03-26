@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EZYShop - Cart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="cart.js"></script> <!-- External JS -->
+  <script defer src="product.js"></script> <!-- External JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    .nav-link:hover { color: red; }
+  </style>
+</head>
+<body class="font-roboto bg-white text-black">
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div class="text-sm text-gray-600">
+        <span>1234 21st Street , New York City</span> | <span>123-456-7890</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a class="text-sm text-gray-600" href="#">Contact Us</a>
+        <a class="text-sm text-gray-600" href="#">English</a>
+        <a class="text-gray-600" href="#"><i class="fab fa-facebook-f"></i></a>
+        <a class="text-gray-600" href="#"><i class="fab fa-twitter"></i></a>
+        <a class="text-gray-600" href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-black">EZYShop</div>
+      <ul class="flex space-x-6">
+        <li><a class="text-gray-600 nav-link" href="1home.html">Home</a></li>
+        <li><a class="text-gray-600 nav-link" href="2todaysdeals.html">Today's Deal</a></li>
+        <li><a class="text-gray-600 nav-link" href="3electronics.html">Electronics</a></li>
+        <li><a class="text-gray-600 nav-link" href="4fashion.html">Fashion</a></li>
+        <li><a class="text-gray-600 nav-link" href="5home&kitchen.html">Home & Kitchen</a></li>
+        <li><a class="text-gray-600 nav-link" href="6books.html">Books</a></li>
+      </ul>
+      <div class="flex items-center space-x-4">
+        <a class="bg-black text-white px-4 py-2 rounded" href="cart.html">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gray-100 py-10">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-8">Your Cart</h2>
+      <div id="cartContainer" class="bg-white p-6 rounded-lg shadow-lg">
+        <!-- Cart items will be dynamically inserted here -->
+      </div>
+      <div class="mt-6 text-right">
+        <p id="totalContainer" class="text-xl font-bold"></p>
+        <button id="buyNowBtn" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Buy Now</button>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

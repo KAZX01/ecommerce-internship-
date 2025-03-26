@@ -1,0 +1,262 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   EZYShop
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+    nav a:hover {
+        color :red;
+    }
+   .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 1s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+  </style>
+  <script>
+   function searchProducts() {
+            const query = document.getElementById('search-input').value;
+            alert('Searching for: ' + query);
+            // Implement the search functionality here
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const inner = document.querySelector('.carousel-inner');
+    const slides = document.querySelectorAll('.carousel-slide');
+    let i = 0;
+    const totalSlides = slides.length;
+
+    // Clone the first slide for infinite effect
+    inner.appendChild(slides[0].cloneNode(true));
+
+    setInterval(() => {
+        i++;
+        inner.style.transition = '0.8s ease-in-out';
+        inner.style.transform = `translateX(-${i * 100}%)`;
+    }, 2000);
+
+    // Listen for transition end to reset without lag
+    inner.addEventListener('transitionend', () => {
+        if (i === totalSlides) {
+            inner.style.transition = 'none';
+            i = 0;
+            inner.style.transform = 'translateX(0)';
+        }
+    });
+});
+
+  </script>
+ </head>
+ <body class="font-roboto bg-white text-black">
+  <header class="bg-white shadow">
+   <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+    <div class="text-sm text-gray-600">
+     <span>
+      1234 21st Street , New York City 
+     </span>
+     |
+     <span>
+      123-456-7890
+     </span>
+    </div>
+    <div class="flex items-center space-x-4">
+     <a class="text-sm text-gray-600" href="#">
+      Contact Us
+     </a>
+     <a class="text-sm text-gray-600" href="#">
+      English
+     </a>
+     <a class="text-gray-600" href="#">
+      <i class="fab fa-facebook-f">
+      </i>
+     </a>
+     <a class="text-gray-600" href="#">
+      <i class="fab fa-twitter">
+      </i>
+     </a>
+     <a class="text-gray-600" href="#">
+      <i class="fab fa-instagram">
+      </i>
+     </a>
+    </div>
+   </div>
+  </header>
+  <nav class="bg-white shadow">
+   <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <div class="text-2xl font-bold text-black">
+     EZYShop
+    </div>
+    <ul class="flex space-x-6">
+     <li>
+      <a class="text-gray-600" href="1home.html">
+       Home
+      </a>
+     </li>
+     <li>
+      <a class="text-gray-600" href="2today'sdeals.html">
+       Today's Deal
+      </a>
+     </li>
+     <li>
+      <a class="text-gray-600" href="3electronics.html">
+       Electronics
+      </a>
+     </li>
+     <li>
+      <a class="text-gray-600" href="4fashion.html">
+       Fashion
+      </a>
+     </li>
+     <li>
+      <a class="text-gray-600" href="5home&kitchen.html">
+       Home &amp; Kitchen
+      </a>
+     </li>
+     <li>
+      <a class="text-gray-600" href="6books.html">
+       Books
+      </a>
+     </li>
+    </ul>
+    <div class="flex items-center space-x-4">
+     <div class="relative">
+      <input class="border border-gray-300 rounded px-4 py-2" id="search-input" placeholder="Search..." type="text"/>
+      <button class="absolute right-0 top-0 mt-2 mr-2 text-gray-600" onclick="searchProducts()">
+       <i class="fas fa-search">
+       </i>
+      </button>
+     </div>
+     <a class="bg-black text-white px-4 py-2 rounded" href="cart.html">
+      Cart
+     </a>
+    </div>
+   </div>
+  </nav>
+  <section class="relative">
+   <div class="carousel">
+    <div class="carousel-inner">
+     <div class="carousel-slide">
+      <img alt="Fashionable woman posing in a summer dress with her face and body visible" class="w-full h-96 object-cover" height="600" src="https://storage.googleapis.com/a1aa/image/w0ufUsga-XzDHk5WrMQvE-3scUtaUTOFKmHLL2FUPOI.jpg" width="1920"/>
+     </div>
+     <div class="carousel-slide">
+      <img alt="Fashionable woman posing in a summer dress with her face and body visible" class="w-full h-96 object-cover" height="600" src="https://storage.googleapis.com/a1aa/image/UUbR0LVTZ5L-W_-iZGEReN3SWZ1v7yHtVk29Ba2FN9M.jpg" width="1920"/>
+     </div>
+     <div class="carousel-slide">
+      <img alt="Fashionable young man posing in a summer outfit with his face and body visible" class="w-full h-96 object-cover" height="600" src="https://storage.googleapis.com/a1aa/image/0_HfFt5PS3kkVHTGHXgmlI1_LpOh_bb03fMh7tAFu_M.jpg" width="1920"/>
+     </div>
+     <div class="carousel-slide">
+      <img alt="Fashionable young man posing in a summer outfit with his face and body visible" class="w-full h-96 object-cover" height="600" src="https://storage.googleapis.com/a1aa/image/fnS1bLqnRVPIBr_fMKTlMvhpskdupgi05q7KEyw3Dsg.jpg" width="1920"/>
+     </div>
+    </div>
+    <div class="absolute inset-0 bg-gray-800 bg-opacity-50 flex flex-col justify-center items-start px-10">
+     <h1 class="text-4xl text-white font-bold">
+      SUMMER COLLECTION
+     </h1>
+     <p class="text-white mt-2">
+      COOL GUYS AND GIRLS STYLE UP TO
+      <span class="font-bold">
+       40% OFF
+      </span>
+     </p>
+     <a class="mt-4 bg-blue-600 text-white px-6 py-2 rounded" href="4fashion.html">
+      SHOP NOW
+     </a>
+    </div>
+   </div>
+  </section>
+  <section class="bg-white py-10">
+   <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div class="text-center">
+      <img alt="Ladies boots" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/Ave9CWC3KCZ2SHudw_-oH3_w1vxAsDOTVY5s0wp5lms.jpg" width="200"/>
+      <h3 class="mt-4 text-lg font-bold">
+       Amazing LADIES BOOTS
+      </h3>
+      <p class="mt-2 text-gray-600">
+       SALE UP TO 30%
+      </p>
+     </div>
+     <div class="text-center">
+      <img alt="Mens jackets" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/nO3e_9W5jPi_9tafI6rH33WuL7IpArveNxTm54cW0MM.jpg" width="200"/>
+      <h3 class="mt-4 text-lg font-bold">
+       Cool MENS JACKETS
+      </h3>
+      <p class="mt-2 text-gray-600">
+       SALE UP TO 35%
+      </p>
+     </div>
+     <div class="text-center">
+      <img alt="School bag" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/2rui1OX9PMhdJt-lxXv_01IPQ-w6VznxTJ8yE5sZMkg.jpg" width="200"/>
+      <h3 class="mt-4 text-lg font-bold">
+       Trendy SCHOOL BAG
+      </h3>
+      <p class="mt-2 text-gray-600">
+       SALE UP TO 70%
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <section class="bg-gray-100 py-10">
+   <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold text-center mb-6">
+     RECOMMENDED Sale Products
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+     <div class="text-center">
+      <img alt="Blue hoodie" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/PPKT46IKxD1_cJ1eTlI2kf9aORq-2-tgaEYKzzZA0bc.jpg" width="200"/>
+      <h3 class="mt-4 text-lg font-bold">
+       Blue Hoodie
+      </h3>
+      <p class="mt-2 text-gray-600">
+       Comfortable and stylish blue hoodie perfect for casual wear.
+      </p>
+     </div>
+     <div class="text-center">
+      <img alt="Leather belt" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/ayvkd5yjZhHg_cDe4NjoMWdpo23CRq3yFzhW7SGnFcY.jpg" width="200"/>
+      <h3 class="mt-4 text-lg font-bold">
+       Leather Belt
+      </h3>
+      <p class="mt-2 text-gray-600">
+       High-quality leather belt that adds a touch of elegance to any outfit.
+      </p>
+     </div>
+     <div class="text-center">
+      <img alt="Black slippers" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/bXyyQ6d5AdZioDIHgeubeKthKn1FFVkKHU2PeigFGiQ.jpg" width="200"/>
+      <h3 class="mt-4 text-lg font-bold">
+       Black Slippers
+      </h3>
+      <p class="mt-2 text-gray-600">
+       Comfortable black slippers ideal for indoor and outdoor use.
+      </p>
+     </div>
+     <div class="text-center">
+      <img alt="Black hat" class="mx-auto rounded-md" height="200" src="https://storage.googleapis.com/a1aa/image/djdyuBPOpIVg4CUxCMD0ZOk8OQn5Z2pAmw_hFCfLKVQ.jpg" width="200"/>
+      <h3 class="mt-4 text-lg font-bold">
+       Black Hat
+      </h3>
+      <p class="mt-2 text-gray-600">
+       Stylish black hat that complements any casual or formal attire.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+ </body>
+</html>
